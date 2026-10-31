@@ -6,4 +6,10 @@ export class Decorator {
       target[symbol] = reflectionFunc();
     }
   }
+
+  public static getValue(target: any, symbolName: string) {
+    const symbol = Symbol.for(`pleton.${symbolName}`)
+
+    return target[symbol];
+  }
 }
