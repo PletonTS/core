@@ -7,7 +7,8 @@ export abstract class PletonApplication {
   protected readonly http = new PletonHttp();
   protected readonly di = new PletonDIContainer();
 
-  public async init(controllers: [string, any][]) {
+  public async init(controllers: [string, any][], injectables: [string, any][]) {
+    this.registerInjectables(injectables);
     this.registerControllers(controllers);
     this.initRouter()
 
@@ -19,6 +20,12 @@ export abstract class PletonApplication {
   private registerControllers(controllers: [string, any][]) {
     for (const [name, controller] of controllers) {
       this.di.registerController(name, controller);
+    }
+  }
+
+  private registerInjectables(injectables: [string, any][]) {
+    for (const [name, injectable] of injectables) {
+      this.di.registerInjectable(name, injectable);
     }
   }
 
